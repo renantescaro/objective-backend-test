@@ -74,6 +74,7 @@ class AccountModel(Base):
             return None
 
         finally:
+            connection.commit()
             connection.close()
             engine.dispose()
 
@@ -94,6 +95,7 @@ class AccountModel(Base):
             return False
 
         finally:
+            connection.commit()
             connection.close()
             engine.dispose()
 
@@ -123,5 +125,6 @@ class AccountModel(Base):
             return False
 
         finally:
+            connection.commit()
             connection.close()
             engine.dispose()

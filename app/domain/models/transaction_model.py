@@ -80,6 +80,7 @@ class TransactionModel(Base):
             return None
 
         finally:
+            connection.commit()
             connection.close()
             engine.dispose()
 
@@ -100,6 +101,7 @@ class TransactionModel(Base):
             return False
 
         finally:
+            connection.commit()
             connection.close()
             engine.dispose()
 
@@ -137,5 +139,6 @@ class TransactionModel(Base):
             return False
 
         finally:
+            connection.commit()
             connection.close()
             engine.dispose()

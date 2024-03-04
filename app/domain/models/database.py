@@ -12,7 +12,8 @@ from sqlalchemy import (
 from sqlalchemy.ext.declarative import declarative_base
 
 metadata_obj = MetaData()
-engine = create_engine(str(os.getenv("JAWSDB_MARIA_URL")))
-
+engine = create_engine(
+    str(os.getenv("JAWSDB_MARIA_URL")),
+)
 
 base = declarative_base()
