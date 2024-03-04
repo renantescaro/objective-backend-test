@@ -24,7 +24,7 @@ class AccountModel(Base):
     @staticmethod
     def select(
         id: Optional[int] = None,
-        account_number: Optional[int] = None,
+        account_number: Optional[str] = None,
         document: Optional[str] = None,
     ):
         connection = engine.connect()
