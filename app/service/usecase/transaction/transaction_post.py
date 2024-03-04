@@ -1,7 +1,9 @@
 import time
 from json import dumps
 from http import HTTPStatus
+from typing import Optional
 from app.domain.models.account_model import AccountModel
+from app.domain.models.fee_model import FeeModel
 from app.domain.models.transaction_model import TransactionModel
 from app.domain.usecases.transaction import TransactionNewParams
 from app.service.enum.payment_method_enum import PaymentMethod
@@ -14,9 +16,23 @@ class TransactionPost:
         self,
         transaction_model: TransactionModel,
         account_model: AccountModel,
+        fee_model: FeeModel,
     ) -> None:
         self._transaction_model = transaction_model
         self._account_model = account_model
+        self._fee_model = fee_model
+
+    def _get_fee(
+        self,
+        payment_method: PaymentMethod,
+    ) -> Optional[float]:
+        try:
+            fee = self._fee_model.select(payment_method)
+            return float(fee.amount)
+
+        except Exception as e:
+            print(f"'TransactionPost' error: {e}")
+            return None
 
     def execute(
         self,
@@ -39,13 +55,7 @@ class TransactionPost:
                 )
 
             # fee
-            fee = 0
-            if params.payment_method == PaymentMethod.DEBIT_CARD:
-                fee = params.amount * 0.03
-
-            if params.payment_method == PaymentMethod.CREDIT_CARD:
-                fee = params.amount * 0.05
-
+            fee = params.amount * (self._get_fee(params.payment_method) or 0)
             total_value = account.amount - (params.amount + fee)
 
             # transactions

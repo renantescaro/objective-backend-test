@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from fastapi import Response
 from app.domain.models.account_model import AccountModel
+from app.domain.models.fee_model import FeeModel
 from app.domain.models.transaction_model import TransactionModel
 from app.domain.usecases.transaction import (
     IncomingTransactionParams,
@@ -39,6 +40,7 @@ def new_transaction(
     result = TransactionPost(
         transaction_model=TransactionModel(),
         account_model=AccountModel(),
+        fee_model=FeeModel(),
     ).execute(body)
 
     response.status_code = result.status_code
