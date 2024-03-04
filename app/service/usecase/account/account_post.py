@@ -38,7 +38,7 @@ class AccountPost:
                 )
 
             return UsecaseReturn(
-                status_code=HTTPStatus.OK,
+                status_code=HTTPStatus.CREATED,
                 body=dumps(
                     {
                         "conta_id": account_id,

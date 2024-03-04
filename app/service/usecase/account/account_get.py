@@ -1,8 +1,7 @@
 from json import dumps
 from http import HTTPStatus
-from typing import Any
 from app.domain.models.account_model import AccountModel
-from app.service.usecase.usecase import Usecase, UsecaseReturn
+from app.service.usecase.usecase import UsecaseReturn
 
 
 class AccountGet:

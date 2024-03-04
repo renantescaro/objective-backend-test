@@ -4,19 +4,26 @@ from app.main.main import app
 from app.service.usecase.transaction.transaction_post import TransactionPost
 
 
-@app.get(
+@app.post(
     "/transacao",
     responses={
-        HTTPStatus.OK.value: {"model": "", "description": ""},
+        HTTPStatus.CREATED.value: {
+            "model": "",
+            "description": "Transação efetuada com sucesso",
+        },
+        HTTPStatus.NOT_FOUND.value: {
+            "model": "",
+            "description": "Saldo insuficiente",
+        },
         HTTPStatus.INTERNAL_SERVER_ERROR.value: {
             "model": "",
-            "description": "Internal Server Error",
+            "description": "Erro ao efetuar transação",
         },
     },
     status_code=HTTPStatus.OK,
     tags=["transacao"],
 )
-def transaction_new(
+def new_transaction(
     request: Request,
     response: Response,
 ):

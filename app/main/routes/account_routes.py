@@ -10,16 +10,23 @@ from app.service.usecase.account.account_post import AccountPost
 @app.post(
     "/conta",
     responses={
-        HTTPStatus.CREATED.value: {"model": "", "description": ""},
+        HTTPStatus.CREATED.value: {
+            "model": "",
+            "description": "conta criada com sucesso",
+        },
+        HTTPStatus.BAD_REQUEST.value: {
+            "model": "",
+            "description": "Não é possível utilizar esse número de conta",
+        },
         HTTPStatus.INTERNAL_SERVER_ERROR.value: {
             "model": "",
-            "description": "Internal Server Error",
+            "description": "Erro ao criar conta",
         },
     },
     status_code=HTTPStatus.OK,
     tags=["conta"],
 )
-def account_create(
+def create_account(
     body: AccountNewParams,
     response: Response,
 ):
@@ -37,6 +44,10 @@ def account_create(
     "/conta",
     responses={
         HTTPStatus.OK.value: {"model": "", "description": ""},
+        HTTPStatus.NOT_FOUND.value: {
+            "model": "",
+            "description": "Conta não encontrada",
+        },
         HTTPStatus.INTERNAL_SERVER_ERROR.value: {
             "model": "",
             "description": "Internal Server Error",
@@ -45,7 +56,7 @@ def account_create(
     status_code=HTTPStatus.OK,
     tags=["conta"],
 )
-def account_get_by_id(
+def get_account_by_id(
     id: int,
     request: Request,
     response: Response,
