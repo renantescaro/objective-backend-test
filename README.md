@@ -1,5 +1,22 @@
 
-### No Windows
+### Deploy no Heruko
+https://objective-backend-dd95afd20aca.herokuapp.com/docs
+
+<br><br>
+
+### Validação de campos:
+<img src="doc/check_body_exemple.png">
+
+<br><br>
+
+### Documentação da API:
+<img src="doc/doc_swagger.png">
+
+## Executar como desenvolvedor 🧩
+
+<br><br>
+
+### No Windows 🪟
 1 - Instalar todas as dependências
 ```bash
 python -m venv venv
@@ -13,7 +30,7 @@ venv\Scripts\activate.bat
 run_dev.bat
 ```
 
-### No Linux
+### No Linux 🐧
 1 - Instalar todas as dependências
 ```bash
 python3 -m venv venv
