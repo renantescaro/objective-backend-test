@@ -1,5 +1,8 @@
 from typing import Optional
-from sqlalchemy import Column, Integer, String, ForeignKey, Enum, Float
+from sqlalchemy import Column, Integer, ForeignKey, Enum, Float
+from app.service.enum.payment_method_enum import PaymentMethod
+from app.service.enum.transaction_kind_enum import TransactionKind
+from app.service.helper.log import Log
 from app.domain.models.database import (
     base as Base,
     select,
@@ -9,9 +12,6 @@ from app.domain.models.database import (
     engine,
     and_,
 )
-from app.service.enum.payment_method_enum import PaymentMethod
-from app.service.enum.transaction_kind_enum import TransactionKind
-from app.service.helper.log import Log
 
 
 class TransactionModel(Base):
