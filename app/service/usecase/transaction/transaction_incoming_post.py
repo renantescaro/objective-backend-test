@@ -3,13 +3,12 @@ from json import dumps
 from http import HTTPStatus
 from app.domain.models.account_model import AccountModel
 from app.domain.models.transaction_model import TransactionModel
-from app.domain.usecases.transaction import TransactionNewParams
-from app.service.enum.payment_method_enum import PaymentMethod
+from app.domain.usecases.transaction import IncomingTransactionParams
 from app.service.enum.transaction_kind_enum import TransactionKind
 from app.service.usecase.usecase import UsecaseReturn
 
 
-class TransactionPost:
+class TransactionIncomingPost:
     def __init__(
         self,
         transaction_model: TransactionModel,
@@ -20,7 +19,7 @@ class TransactionPost:
 
     def execute(
         self,
-        params: TransactionNewParams,
+        params: IncomingTransactionParams,
     ) -> UsecaseReturn:
         try:
             # get account
@@ -31,27 +30,9 @@ class TransactionPost:
                     body="Conta não encontrada!",
                 )
 
-            # check financial funds
-            if account.amount < params.amount:
-                return UsecaseReturn(
-                    status_code=HTTPStatus.NOT_FOUND,
-                    body="Saldo insuficiente!",
-                )
-
-            # fee
-            fee = 0
-            if params.payment_method == PaymentMethod.DEBIT_CARD:
-                fee = params.amount * 0.03
-
-            if params.payment_method == PaymentMethod.CREDIT_CARD:
-                fee = params.amount * 0.05
-
-            total_value = account.amount - (params.amount + fee)
-
             # transactions
             transaction_inserted = self._transaction_model.insert(
-                payment_method=params.payment_method,
-                transaction_kind=TransactionKind.OUTPUT,
+                transaction_kind=TransactionKind.INPUT,
                 account_id=account.id,
                 amount=params.amount,
                 timestamp=int(time.time()),
@@ -60,6 +41,8 @@ class TransactionPost:
                 return UsecaseReturn(
                     status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
                 )
+
+            total_value = account.amount + params.amount
 
             account_update_status = self._account_model.update(
                 id=account.id,
@@ -82,7 +65,7 @@ class TransactionPost:
             )
 
         except Exception as e:
-            print(f"'TransactionPost' error in 'execute' {e}")
+            print(f"'TransactionIncomingPost' error in 'execute' {e}")
             return UsecaseReturn(
                 status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
             )

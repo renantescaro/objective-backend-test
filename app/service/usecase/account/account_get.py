@@ -34,4 +34,6 @@ class AccountGet:
 
         except Exception as e:
             print(f"'AccountGet' error in 'execute' {e}")
-            return UsecaseReturn(status_code=HTTPStatus.INTERNAL_SERVER_ERROR)
+            return UsecaseReturn(
+                status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
+            )

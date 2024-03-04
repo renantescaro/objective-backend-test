@@ -25,6 +25,10 @@ PUBLIC_PATHS = [
         "path": "/transacao",
         "method": ["GET", "POST", "OPTIONS"],
     },
+    {
+        "path": "/deposito",
+        "method": ["GET", "POST", "OPTIONS"],
+    },
 ]
 
 

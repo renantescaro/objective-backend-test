@@ -22,6 +22,7 @@ class TransactionModel(Base):
     payment_method = Column(Enum(PaymentMethod), unique=False, index=False)
     transaction_kind = Column(Enum(TransactionKind), unique=False, index=False)
     account_id = Column(Integer, ForeignKey("account.id"))
+    timestamp = Column(Integer, unique=False, index=False)
 
     @staticmethod
     def select(
@@ -59,10 +60,11 @@ class TransactionModel(Base):
 
     @staticmethod
     def insert(
-        payment_method: Optional[PaymentMethod],
-        transaction_kind: Optional[TransactionKind],
         account_id: int,
         amount: float,
+        timestamp: int,
+        transaction_kind: Optional[TransactionKind],
+        payment_method: Optional[PaymentMethod] = None,
     ):
         connection = engine.connect()
         try:
@@ -71,6 +73,7 @@ class TransactionModel(Base):
                 transaction_kind=transaction_kind,
                 account_id=account_id,
                 amount=amount,
+                timestamp=timestamp,
             )
             result = connection.execute(stmt)
             return result.inserted_primary_key[0]
