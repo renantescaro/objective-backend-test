@@ -19,17 +19,12 @@ PUBLIC_PATHS = [
     },
     {
         "path": "/conta",
-        "method": ["POST", "OPTIONS"],
+        "method": ["GET", "POST", "OPTIONS"],
     },
     {
         "path": "/transacao",
-        "method": ["POST", "OPTIONS"],
+        "method": ["GET", "POST", "OPTIONS"],
     },
-]
-
-
-STAFF_PATHS = [
-    "/users-staff",
 ]
 
 
@@ -50,7 +45,8 @@ def _is_valid_credentials(headers: Any, path: str) -> bool:
 
 def _mount_unauthorized_payload() -> JSONResponse:
     return JSONResponse(
-        content={"message": "Unauthorized"}, status_code=HTTPStatus.UNAUTHORIZED
+        content={"message": "Unauthorized"},
+        status_code=HTTPStatus.UNAUTHORIZED,
     )
 
 
@@ -67,6 +63,7 @@ async def auth(request: Request, call_next):
 
     # private routes
     if not _is_valid_credentials(request.headers, path):
+
         # tests with frontends
         if method == "OPTIONS" and is_dev():
             return await call_next(request)
