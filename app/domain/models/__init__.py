@@ -1,4 +1,5 @@
-# TODO: add models account and transactions
+from .account_model import AccountModel
+from .transaction_model import TransactionModel
 
 from .database import engine, base
 
