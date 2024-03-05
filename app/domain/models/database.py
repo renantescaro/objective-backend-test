@@ -9,7 +9,7 @@ from sqlalchemy import (
     or_,
     and_,
 )
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 metadata_obj = MetaData()
 engine = create_engine(
