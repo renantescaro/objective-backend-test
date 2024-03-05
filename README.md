@@ -1,5 +1,5 @@
 
-### Deploy no Heruko
+### Deploy no Heroku
 https://objective-backend-dd95afd20aca.herokuapp.com/docs
 
 <br><br>
